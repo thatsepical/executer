@@ -277,15 +277,15 @@ local function createLoadingBar(parent, buttonYPosition)
 end
 
 local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = createLoadingBar(petTabFrame, 0.60)
-local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, 0.35)
-local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, 0.35)
+local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, 0.40)
+local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, 0.40)
 
 local spawnBtn = createButton(petTabFrame, "SPAWN", 0.60, 0.44)
 local duplicateBtn = createButton(petTabFrame, "DUPE", 0.60, 0.44)
 duplicateBtn.Position = UDim2.new(0.51, 0, 0.60, 0)
-local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.35)
-local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.35)
-local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.55)
+local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.40)
+local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.40)
+local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.60)
 
 local function showNotification(message)
     local notification = Instance.new("Frame")
