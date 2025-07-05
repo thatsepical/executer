@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 280*uiScale, 0, 200*uiScale)
-mainFrame.Position = UDim2.new(0.5, -140*uiScale, 0.5, -100*uiScale)
+mainFrame.Size = UDim2.new(0, 280*uiScale, 0, 220*uiScale)
+mainFrame.Position = UDim2.new(0.5, -140*uiScale, 0.5, -110*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -187,12 +187,12 @@ local function createTextBox(parent, placeholder, pos)
 end
 
 local petNameBox = createTextBox(petTabFrame, "Pet Name", UDim2.new(0.05, 0, 0.05, 0))
-local weightBox = createTextBox(petTabFrame, "Weight", UDim2.new(0.05, 0, 0.22, 0))
-local ageBox = createTextBox(petTabFrame, "Age", UDim2.new(0.05, 0, 0.39, 0))
+local weightBox = createTextBox(petTabFrame, "Weight", UDim2.new(0.05, 0, 0.18, 0))
+local ageBox = createTextBox(petTabFrame, "Age", UDim2.new(0.05, 0, 0.31, 0))
 local seedNameBox = createTextBox(seedTabFrame, "Seed Name", UDim2.new(0.05, 0, 0.05, 0))
-local amountBox = createTextBox(seedTabFrame, "Amount", UDim2.new(0.05, 0, 0.22, 0))
+local amountBox = createTextBox(seedTabFrame, "Amount", UDim2.new(0.05, 0, 0.18, 0))
 local eggNameBox = createTextBox(eggTabFrame, "Egg Name", UDim2.new(0.05, 0, 0.05, 0))
-local spinBox = createTextBox(eggTabFrame, "Plant to Spin", UDim2.new(0.05, 0, 0.22, 0))
+local spinBox = createTextBox(eggTabFrame, "Plant to Spin", UDim2.new(0.05, 0, 0.18, 0))
 
 local function validateDecimal(box)
     box:GetPropertyChangedSignal("Text"):Connect(function()
@@ -280,12 +280,12 @@ local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = create
 local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
-local spawnBtn = createButton(petTabFrame, "SPAWN", 0.56, 0.44)
-local duplicateBtn = createButton(petTabFrame, "DUPE", 0.56, 0.44)
-duplicateBtn.Position = UDim2.new(0.51, 0, 0.56, 0)
-local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.39)
-local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.39)
-local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.59)
+local spawnBtn = createButton(petTabFrame, "SPAWN", 0.50, 0.44)
+local duplicateBtn = createButton(petTabFrame, "DUPE", 0.50, 0.44)
+duplicateBtn.Position = UDim2.new(0.51, 0, 0.50, 0)
+local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.35)
+local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.35)
+local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.55)
 
 local function showNotification(message)
     local notification = Instance.new("Frame")
