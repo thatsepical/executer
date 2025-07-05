@@ -210,9 +210,9 @@ for _, b in ipairs({weightBox, ageBox, amountBox}) do
     validateDecimal(b) 
 end
 
-local function createButton(parent, label, posY)
+local function createButton(parent, label, posY, width)
     local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(0.9, 0, 0, 25)
+    btn.Size = UDim2.new(width or 0.9, 0, 0, 25)
     btn.Position = UDim2.new(0.05, 0, posY, 0)
     btn.Text = label
     btn.Font = Enum.Font.SourceSans
@@ -280,8 +280,9 @@ local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = create
 local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
-local spawnBtn = createButton(petTabFrame, "SPAWN PET", 0.65)
-local duplicateBtn = createButton(petTabFrame, "DUPLICATE PET", 0.70)
+local spawnBtn = createButton(petTabFrame, "SPAWN", 0.65, 0.44)
+local duplicateBtn = createButton(petTabFrame, "DUPE", 0.65, 0.44)
+duplicateBtn.Position = UDim2.new(0.51, 0, 0.65, 0)
 local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.45)
 local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.45)
 local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.65)
