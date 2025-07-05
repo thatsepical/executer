@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 180*uiScale)
-mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -90*uiScale)
+mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 180*uiScale) -- Changed from 220 to 180
+mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -90*uiScale) -- Adjusted position accordingly
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
