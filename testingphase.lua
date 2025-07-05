@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 280*uiScale)
-mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -140*uiScale)
+mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 260*uiScale)
+mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -130*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -238,7 +238,7 @@ local function createLoadingBar(parent, category)
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
     loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.80, 0)
+    loadingText.Position = UDim2.new(0.05, 0, 0.75, 0)
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
@@ -250,7 +250,7 @@ local function createLoadingBar(parent, category)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.87, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, 0.82, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
@@ -377,9 +377,9 @@ duplicateBtn.MouseButton1Click:Connect(function()
     local humanoid = character:FindFirstChildOfClass("Humanoid")
     if not humanoid then return end
     
-    local tool = humanoid:FindFirstChildOfClass("Tool")
+    local tool = humanoid:FindFirstChildOfClass("Tool") or player.Backpack:FindFirstChildOfClass("Tool")
     if not tool then
-        showNotification("Please hold a pet to duplicate")
+        showNotification("Please hold or have a pet in your backpack")
         return
     end
     
@@ -389,10 +389,6 @@ duplicateBtn.MouseButton1Click:Connect(function()
         
         local clone = tool:Clone()
         clone.Parent = player.Backpack
-        if humanoid:FindFirstChildOfClass("Tool") then
-            humanoid:FindFirstChildOfClass("Tool"):Destroy()
-        end
-        clone.Parent = character
         
         duplicateBtn.Visible = true
         showNotification("Successfully duplicated "..tool.Name)
