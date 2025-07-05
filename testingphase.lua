@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 260*uiScale)
-mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -130*uiScale)
+mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 180*uiScale)
+mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -90*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -245,6 +245,7 @@ local function createLoadingBar(parent, category)
     loadingText.BackgroundTransparency = 1
     loadingText.TextXAlignment = Enum.TextXAlignment.Left
     loadingText.Visible = false
+    loadingText.TextTruncate = Enum.TextTruncate.AtEnd
     loadingText.Parent = parent
 
     local loadingBarBg = Instance.new("Frame")
