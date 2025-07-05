@@ -280,12 +280,12 @@ local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = create
 local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
-local spawnBtn = createButton(petTabFrame, "SPAWN", 0.65, 0.44)
-local duplicateBtn = createButton(petTabFrame, "DUPE", 0.65, 0.44)
-duplicateBtn.Position = UDim2.new(0.51, 0, 0.65, 0)
-local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.45)
-local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.45)
-local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.65)
+local spawnBtn = createButton(petTabFrame, "SPAWN", 0.50, 0.44)
+local duplicateBtn = createButton(petTabFrame, "DUPE", 0.50, 0.44)
+duplicateBtn.Position = UDim2.new(0.51, 0, 0.50, 0)
+local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.35)
+local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.35)
+local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.55)
 
 local function showNotification(message)
     local notification = Instance.new("Frame")
@@ -332,10 +332,13 @@ local function showNotification(message)
 end
 
 local function startLoading(loadingText, loadingBarBg, loadingBar, loadingPercent, name, weight, age, category, isDuplicate)
-    local remainingTime = isDuplicate and 60 or 180
-    loadingText.Text = "Spawning "..name..(isDuplicate and " (DUPLICATE)" or "").." ("..(weight or "0").." KG) ("..(age or "0").." Age) in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
+    spawnBtn.Visible = false
+    duplicateBtn.Visible = false
     loadingText.Visible = true
     loadingBarBg.Visible = true
+    
+    local remainingTime = isDuplicate and 60 or 180
+    loadingText.Text = "Spawning "..name..(isDuplicate and " (DUPLICATE)" or "").." ("..(weight or "0").." KG) ("..(age or "0").." Age) in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
     
     local startTime = tick()
     local duration = remainingTime
@@ -352,6 +355,8 @@ local function startLoading(loadingText, loadingBarBg, loadingBar, loadingPercen
     loadingText.Visible = false
     loadingBarBg.Visible = false
     loadingBar.Size = UDim2.new(0, 0, 1, 0)
+    spawnBtn.Visible = true
+    duplicateBtn.Visible = true
 end
 
 spawnBtn.MouseButton1Click:Connect(function()
@@ -362,10 +367,8 @@ spawnBtn.MouseButton1Click:Connect(function()
         showNotification("Please enter a pet name")
         return
     end
-    spawnBtn.Visible = false
     task.spawn(function()
         startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, petName, weight, age, "PET", false)
-        spawnBtn.Visible = true
         showNotification("Successfully spawned "..petName)
     end)
 end)
@@ -383,14 +386,12 @@ duplicateBtn.MouseButton1Click:Connect(function()
         return
     end
     
-    duplicateBtn.Visible = false
     task.spawn(function()
         startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, tool.Name, nil, nil, "PET", true)
         
         local clone = tool:Clone()
         clone.Parent = player.Backpack
         
-        duplicateBtn.Visible = true
         showNotification("Successfully duplicated "..tool.Name)
     end)
 end)
