@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 280*uiScale, 0, 220*uiScale)
-mainFrame.Position = UDim2.new(0.5, -140*uiScale, 0.5, -110*uiScale)
+mainFrame.Size = UDim2.new(0, 280*uiScale, 0, 190*uiScale)
+mainFrame.Position = UDim2.new(0.5, -140*uiScale, 0.5, -95*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -238,7 +238,7 @@ local function createLoadingBar(parent, category)
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
     loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.65, 0)
+    loadingText.Position = UDim2.new(0.05, 0, 0.44, 0)
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
@@ -250,7 +250,7 @@ local function createLoadingBar(parent, category)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.72, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, 0.51, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
@@ -280,9 +280,9 @@ local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = create
 local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
-local spawnBtn = createButton(petTabFrame, "SPAWN", 0.50, 0.44)
-local duplicateBtn = createButton(petTabFrame, "DUPE", 0.50, 0.44)
-duplicateBtn.Position = UDim2.new(0.51, 0, 0.50, 0)
+local spawnBtn = createButton(petTabFrame, "SPAWN", 0.60, 0.44)
+local duplicateBtn = createButton(petTabFrame, "DUPE", 0.60, 0.44)
+duplicateBtn.Position = UDim2.new(0.51, 0, 0.60, 0)
 local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.35)
 local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.35)
 local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.55)
