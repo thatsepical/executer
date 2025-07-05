@@ -187,12 +187,12 @@ local function createTextBox(parent, placeholder, pos)
 end
 
 local petNameBox = createTextBox(petTabFrame, "Pet Name", UDim2.new(0.05, 0, 0.05, 0))
-local weightBox = createTextBox(petTabFrame, "Weight", UDim2.new(0.05, 0, 0.25, 0))
-local ageBox = createTextBox(petTabFrame, "Age", UDim2.new(0.05, 0, 0.45, 0))
+local weightBox = createTextBox(petTabFrame, "Weight", UDim2.new(0.05, 0, 0.15, 0))
+local ageBox = createTextBox(petTabFrame, "Age", UDim2.new(0.05, 0, 0.25, 0))
 local seedNameBox = createTextBox(seedTabFrame, "Seed Name", UDim2.new(0.05, 0, 0.05, 0))
-local amountBox = createTextBox(seedTabFrame, "Amount", UDim2.new(0.05, 0, 0.25, 0))
+local amountBox = createTextBox(seedTabFrame, "Amount", UDim2.new(0.05, 0, 0.15, 0))
 local eggNameBox = createTextBox(eggTabFrame, "Egg Name", UDim2.new(0.05, 0, 0.05, 0))
-local spinBox = createTextBox(eggTabFrame, "Plant to Spin", UDim2.new(0.05, 0, 0.25, 0))
+local spinBox = createTextBox(eggTabFrame, "Plant to Spin", UDim2.new(0.05, 0, 0.15, 0))
 
 local function validateDecimal(box)
     box:GetPropertyChangedSignal("Text"):Connect(function()
@@ -238,7 +238,7 @@ local function createLoadingBar(parent, category)
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
     loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.75, 0)
+    loadingText.Position = UDim2.new(0.05, 0, 0.35, 0)
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
@@ -250,7 +250,7 @@ local function createLoadingBar(parent, category)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.82, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, 0.42, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
@@ -280,12 +280,12 @@ local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = create
 local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
-local spawnBtn = createButton(petTabFrame, "SPAWN", 0.65, 0.44)
-local duplicateBtn = createButton(petTabFrame, "DUPE", 0.65, 0.44)
-duplicateBtn.Position = UDim2.new(0.51, 0, 0.65, 0)
-local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.45)
-local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.45)
-local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.65)
+local spawnBtn = createButton(petTabFrame, "SPAWN", 0.45, 0.44)
+local duplicateBtn = createButton(petTabFrame, "DUPE", 0.45, 0.44)
+duplicateBtn.Position = UDim2.new(0.51, 0, 0.45, 0)
+local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.35)
+local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.35)
+local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.55)
 
 local function showNotification(message)
     local notification = Instance.new("Frame")
