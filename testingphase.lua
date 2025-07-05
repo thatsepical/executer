@@ -30,8 +30,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 230*uiScale) -- Reduced height only
-mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -115*uiScale) -- Adjusted position to maintain center
+mainFrame.Size = UDim2.new(0, 250*uiScale, 0, 200*uiScale)
+mainFrame.Position = UDim2.new(0.5, -125*uiScale, 0.5, -100*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -238,7 +238,7 @@ local function createLoadingBar(parent, category)
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
     loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.50, 0)
+    loadingText.Position = UDim2.new(0.05, 0, 0.65, 0)
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
@@ -250,7 +250,7 @@ local function createLoadingBar(parent, category)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.57, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, 0.72, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
