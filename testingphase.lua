@@ -234,23 +234,11 @@ local function createButton(parent, label, posY, width)
     return btn
 end
 
-local function createLoadingBar(parent, category)
-    local loadingText = Instance.new("TextLabel")
-    loadingText.Name = "LoadingText"
-    loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.44, 0)
-    loadingText.Font = Enum.Font.SourceSans
-    loadingText.TextSize = 12
-    loadingText.TextColor3 = textColor
-    loadingText.BackgroundTransparency = 1
-    loadingText.TextXAlignment = Enum.TextXAlignment.Left
-    loadingText.Visible = false
-    loadingText.Parent = parent
-
+local function createLoadingBar(parent)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.51, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, 0.44, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
@@ -273,12 +261,24 @@ local function createLoadingBar(parent, category)
     loadingPercent.Text = "0%"
     loadingPercent.Parent = loadingBarBg
 
+    local loadingText = Instance.new("TextLabel")
+    loadingText.Name = "LoadingText"
+    loadingText.Size = UDim2.new(0.9, 0, 0, 15)
+    loadingText.Position = UDim2.new(0.05, 0, 0.50, 0)
+    loadingText.Font = Enum.Font.SourceSans
+    loadingText.TextSize = 12
+    loadingText.TextColor3 = textColor
+    loadingText.BackgroundTransparency = 1
+    loadingText.TextXAlignment = Enum.TextXAlignment.Left
+    loadingText.Visible = false
+    loadingText.Parent = parent
+
     return loadingText, loadingBarBg, loadingBar, loadingPercent
 end
 
-local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = createLoadingBar(petTabFrame, "PET")
-local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, "SEED")
-local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
+local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = createLoadingBar(petTabFrame)
+local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame)
+local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame)
 
 local spawnBtn = createButton(petTabFrame, "SPAWN", 0.60, 0.44)
 local duplicateBtn = createButton(petTabFrame, "DUPE", 0.60, 0.44)
@@ -332,8 +332,15 @@ local function showNotification(message)
 end
 
 local function startLoading(loadingText, loadingBarBg, loadingBar, loadingPercent, name, weight, age, category, isDuplicate)
-    spawnBtn.Visible = false
-    duplicateBtn.Visible = false
+    if category == "PET" then
+        spawnBtn.Visible = false
+        duplicateBtn.Visible = false
+    elseif category == "SEED" then
+        spawnSeedBtn.Visible = false
+    elseif category == "EGG" then
+        spawnEggBtn.Visible = false
+    end
+    
     loadingText.Visible = true
     loadingBarBg.Visible = true
     
@@ -355,8 +362,15 @@ local function startLoading(loadingText, loadingBarBg, loadingBar, loadingPercen
     loadingText.Visible = false
     loadingBarBg.Visible = false
     loadingBar.Size = UDim2.new(0, 0, 1, 0)
-    spawnBtn.Visible = true
-    duplicateBtn.Visible = true
+    
+    if category == "PET" then
+        spawnBtn.Visible = true
+        duplicateBtn.Visible = true
+    elseif category == "SEED" then
+        spawnSeedBtn.Visible = true
+    elseif category == "EGG" then
+        spawnEggBtn.Visible = true
+    end
 end
 
 spawnBtn.MouseButton1Click:Connect(function()
@@ -402,10 +416,8 @@ spawnSeedBtn.MouseButton1Click:Connect(function()
         showNotification("Please enter a seed name")
         return
     end
-    spawnSeedBtn.Visible = false
     task.spawn(function()
         startLoading(seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent, seedName, nil, nil, "SEED", false)
-        spawnSeedBtn.Visible = true
         showNotification("Successfully spawned "..seedName)
     end)
 end)
@@ -416,10 +428,8 @@ spawnEggBtn.MouseButton1Click:Connect(function()
         showNotification("Please enter an egg name")
         return
     end
-    spawnEggBtn.Visible = false
     task.spawn(function()
         startLoading(eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent, eggName, nil, nil, "EGG", false)
-        spawnEggBtn.Visible = true
         showNotification("Successfully spawned "..eggName)
     end)
 end)
