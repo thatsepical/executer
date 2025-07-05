@@ -281,7 +281,7 @@ local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = cr
 local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, "EGG")
 
 local spawnBtn = createButton(petTabFrame, "SPAWN PET", 0.65)
-local duplicateBtn = createButton(petTabFrame, "DUPLICATE PET", 0.75)
+local duplicateBtn = createButton(petTabFrame, "DUPLICATE PET", 0.70)
 local spawnSeedBtn = createButton(seedTabFrame, "SPAWN SEED", 0.45)
 local spawnEggBtn = createButton(eggTabFrame, "SPAWN EGG", 0.45)
 local spinBtn = createButton(eggTabFrame, "SPIN PLANT", 0.65)
@@ -370,18 +370,23 @@ spawnBtn.MouseButton1Click:Connect(function()
 end)
 
 duplicateBtn.MouseButton1Click:Connect(function()
-    local petName = petNameBox.Text
-    local weight = weightBox.Text
-    local age = ageBox.Text
-    if petName == "" then
-        showNotification("Please enter a pet name to duplicate")
+    local character = player.Character
+    if not character then return end
+    
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    if not humanoid then return end
+    
+    local tool = humanoid:FindFirstChildOfClass("Tool")
+    if not tool then
+        showNotification("Please hold a pet to duplicate")
         return
     end
+    
     duplicateBtn.Visible = false
     task.spawn(function()
-        startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, petName, weight, age, "PET", true)
+        startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, tool.Name, nil, nil, "PET", true)
         duplicateBtn.Visible = true
-        showNotification("Successfully duplicated "..petName)
+        showNotification("Successfully duplicated "..tool.Name)
     end)
 end)
 
