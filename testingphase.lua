@@ -263,17 +263,17 @@ local function createLoadingBar(parent, buttonYPosition)
 
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
-    loadingText.Size = UDim2.new(0.9, 0, 0, 30) -- Increased height for text wrapping
-    loadingText.Position = UDim2.new(0.05, 0, buttonYPosition + 0.10, 0) -- Increased vertical gap
+    loadingText.Size = UDim2.new(0.9, 0, 0, 40)
+    loadingText.Position = UDim2.new(0.05, 0, buttonYPosition + 0.18, 0) -- Increased vertical spacing
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
     loadingText.BackgroundTransparency = 1
     loadingText.TextXAlignment = Enum.TextXAlignment.Left
     loadingText.TextYAlignment = Enum.TextYAlignment.Top
-    loadingText.TextWrapped = true -- Enable text wrapping
+    loadingText.TextWrapped = true
     loadingText.TextScaled = false
-    loadingText.AutomaticSize = Enum.AutomaticSize.Y -- Auto-adjust height
+    loadingText.AutomaticSize = Enum.AutomaticSize.Y
     loadingText.Visible = false
     loadingText.Parent = parent
 
