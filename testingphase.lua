@@ -234,11 +234,11 @@ local function createButton(parent, label, posY, width)
     return btn
 end
 
-local function createLoadingBar(parent)
+local function createLoadingBar(parent, buttonYPosition)
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBg"
     loadingBarBg.Size = UDim2.new(0.9, 0, 0, 20)
-    loadingBarBg.Position = UDim2.new(0.05, 0, 0.44, 0)
+    loadingBarBg.Position = UDim2.new(0.05, 0, buttonYPosition, 0)
     loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
     loadingBarBg.BorderSizePixel = 0
     loadingBarBg.Visible = false
@@ -264,7 +264,7 @@ local function createLoadingBar(parent)
     local loadingText = Instance.new("TextLabel")
     loadingText.Name = "LoadingText"
     loadingText.Size = UDim2.new(0.9, 0, 0, 15)
-    loadingText.Position = UDim2.new(0.05, 0, 0.50, 0)
+    loadingText.Position = UDim2.new(0.05, 0, buttonYPosition + 0.07, 0)
     loadingText.Font = Enum.Font.SourceSans
     loadingText.TextSize = 12
     loadingText.TextColor3 = textColor
@@ -276,9 +276,9 @@ local function createLoadingBar(parent)
     return loadingText, loadingBarBg, loadingBar, loadingPercent
 end
 
-local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = createLoadingBar(petTabFrame)
-local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame)
-local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame)
+local petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent = createLoadingBar(petTabFrame, 0.60)
+local seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent = createLoadingBar(seedTabFrame, 0.35)
+local eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent = createLoadingBar(eggTabFrame, 0.35)
 
 local spawnBtn = createButton(petTabFrame, "SPAWN", 0.60, 0.44)
 local duplicateBtn = createButton(petTabFrame, "DUPE", 0.60, 0.44)
