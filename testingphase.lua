@@ -335,6 +335,48 @@ local function showNotification(message)
     end)
 end
 
+local function startLoading(loadingText, loadingBarBg, loadingBar, loadingPercent, name, weight, age, category, isDuplicate)
+    if category == "PET" then
+        spawnBtn.Visible = false
+        duplicateBtn.Visible = false
+    elseif category == "SEED" then
+        spawnSeedBtn.Visible = false
+    elseif category == "EGG" then
+        spawnEggBtn.Visible = false
+    end
+    
+    loadingText.Visible = true
+    loadingBarBg.Visible = true
+    
+    local remainingTime = isDuplicate and 60 or 180
+    loadingText.Text = "Spawning "..name..(isDuplicate and " (DUPLICATE)" or "").." ("..(weight or "0").." KG) ("..(age or "0").." Age) in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
+    
+    local startTime = tick()
+    local duration = remainingTime
+    
+    while tick() - startTime < duration do
+        local progress = (tick() - startTime) / duration
+        loadingBar.Size = UDim2.new(progress, 0, 1, 0)
+        loadingPercent.Text = math.floor(progress * 100).."%"
+        remainingTime = duration - (tick() - startTime)
+        loadingText.Text = "Spawning "..name..(isDuplicate and " (DUPLICATE)" or "").." ("..(weight or "0").." KG) ("..(age or "0").." Age) in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
+        task.wait()
+    end
+    
+    loadingText.Visible = false
+    loadingBarBg.Visible = false
+    loadingBar.Size = UDim2.new(0, 0, 1, 0)
+    
+    if category == "PET" then
+        spawnBtn.Visible = true
+        duplicateBtn.Visible = true
+    elseif category == "SEED" then
+        spawnSeedBtn.Visible = true
+    elseif category == "EGG" then
+        spawnEggBtn.Visible = true
+    end
+end
+
 spawnBtn.MouseButton1Click:Connect(function()
     local petName = petNameBox.Text
     local weight = weightBox.Text
@@ -344,45 +386,47 @@ spawnBtn.MouseButton1Click:Connect(function()
         return
     end
     task.spawn(function()
-        petLoadingText.Visible = true
-        petLoadingBarBg.Visible = true
-        
-        local startTime = tick()
-        local duration = 180
-        
-        while tick() - startTime < duration do
-            local progress = (tick() - startTime) / duration
-            petLoadingBar.Size = UDim2.new(progress, 0, 1, 0)
-            petLoadingPercent.Text = math.floor(progress * 100).."%"
-            local remainingTime = duration - (tick() - startTime)
-            petLoadingText.Text = "Spawning "..petName.." ("..(weight or "0").." KG) ("..(age or "0").." Age) in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
-            task.wait()
-        end
-        
-        petLoadingText.Visible = false
-        petLoadingBarBg.Visible = false
-        petLoadingBar.Size = UDim2.new(0, 0, 1, 0)
-        
+        startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, petName, weight, age, "PET", false)
         showNotification("Successfully spawned "..petName)
     end)
 end)
 
 duplicateBtn.MouseButton1Click:Connect(function()
-    local character = player.Character
-    if not character then return end
+    local character = player.Character or player.CharacterAdded:Wait()
+    local tool = nil
     
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return end
+    for _, child in ipairs(character:GetChildren()) do
+        if child:IsA("Tool") then
+            tool = child
+            break
+        end
+    end
     
-    local tool = humanoid:FindFirstChildOfClass("Tool") or player.Backpack:FindFirstChildOfClass("Tool")
+    if not tool then
+        local backpack = player:FindFirstChild("Backpack")
+        if backpack then
+            for _, item in ipairs(backpack:GetChildren()) do
+                if item:IsA("Tool") then
+                    tool = item
+                    break
+                end
+            end
+        end
+    end
+    
     if not tool then
         showNotification("Please hold or have a pet in your backpack")
         return
     end
     
-    local clone = tool:Clone()
-    clone.Parent = player.Backpack
-    showNotification("Successfully duplicated "..tool.Name)
+    task.spawn(function()
+        startLoading(petLoadingText, petLoadingBarBg, petLoadingBar, petLoadingPercent, tool.Name, nil, nil, "PET", true)
+        
+        local clone = tool:Clone()
+        clone.Parent = player.Backpack
+        
+        showNotification("Successfully duplicated "..tool.Name)
+    end)
 end)
 
 spawnSeedBtn.MouseButton1Click:Connect(function()
@@ -392,25 +436,7 @@ spawnSeedBtn.MouseButton1Click:Connect(function()
         return
     end
     task.spawn(function()
-        seedLoadingText.Visible = true
-        seedLoadingBarBg.Visible = true
-        
-        local startTime = tick()
-        local duration = 180
-        
-        while tick() - startTime < duration do
-            local progress = (tick() - startTime) / duration
-            seedLoadingBar.Size = UDim2.new(progress, 0, 1, 0)
-            seedLoadingPercent.Text = math.floor(progress * 100).."%"
-            local remainingTime = duration - (tick() - startTime)
-            seedLoadingText.Text = "Spawning "..seedName.." in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
-            task.wait()
-        end
-        
-        seedLoadingText.Visible = false
-        seedLoadingBarBg.Visible = false
-        seedLoadingBar.Size = UDim2.new(0, 0, 1, 0)
-        
+        startLoading(seedLoadingText, seedLoadingBarBg, seedLoadingBar, seedLoadingPercent, seedName, nil, nil, "SEED", false)
         showNotification("Successfully spawned "..seedName)
     end)
 end)
@@ -422,25 +448,7 @@ spawnEggBtn.MouseButton1Click:Connect(function()
         return
     end
     task.spawn(function()
-        eggLoadingText.Visible = true
-        eggLoadingBarBg.Visible = true
-        
-        local startTime = tick()
-        local duration = 180
-        
-        while tick() - startTime < duration do
-            local progress = (tick() - startTime) / duration
-            eggLoadingBar.Size = UDim2.new(progress, 0, 1, 0)
-            eggLoadingPercent.Text = math.floor(progress * 100).."%"
-            local remainingTime = duration - (tick() - startTime)
-            eggLoadingText.Text = "Spawning "..eggName.." in "..math.ceil(remainingTime/60).." minute"..(remainingTime > 60 and "s" or "")
-            task.wait()
-        end
-        
-        eggLoadingText.Visible = false
-        eggLoadingBarBg.Visible = false
-        eggLoadingBar.Size = UDim2.new(0, 0, 1, 0)
-        
+        startLoading(eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent, eggName, nil, nil, "EGG", false)
         showNotification("Successfully spawned "..eggName)
     end)
 end)
