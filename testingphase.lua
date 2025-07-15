@@ -11,8 +11,8 @@ local isPC = UIS.MouseEnabled
 local uiScale = isPC and 1.15 or 1
 
 local discordBlack = Color3.fromRGB(32, 34, 37)
-local lavender = Color3.fromRGB(207, 83, 64)
-local darkLavender = Color3.fromRGB(207, 83, 64)
+local lavender = Color3.fromHex("#FFEB89")
+local darkLavender = Color3.fromHex("#FFEB89")
 local headerColor = Color3.fromRGB(47, 49, 54)
 local textColor = Color3.fromRGB(220, 220, 220)
 
