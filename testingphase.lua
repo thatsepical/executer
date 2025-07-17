@@ -11,8 +11,8 @@ local isPC = UIS.MouseEnabled
 local uiScale = isPC and 1.15 or 1
 
 local discordBlack = Color3.fromRGB(32, 34, 37)
-local lavender = Color3.fromHex("#f58d42")
-local darkLavender = Color3.fromHex("#f58d42")
+local lavender = Color3.fromRGB(196, 74, 74)
+local darkLavender = Color3.fromRGB(196, 74, 74)
 local headerColor = Color3.fromRGB(47, 49, 54)
 local textColor = Color3.fromRGB(220, 220, 220)
 
@@ -20,11 +20,11 @@ local toggleButton = Instance.new("TextButton")
 toggleButton.Name = "ToggleButton"
 toggleButton.Size = UDim2.new(0, 80*uiScale, 0, 25*uiScale)
 toggleButton.Position = UDim2.new(0, 10, 0, 10)
-toggleButton.Text = "TOGGLE"
+toggleButton.Text = "Close/Open"
 toggleButton.Font = Enum.Font.SourceSans
 toggleButton.TextSize = 14
-toggleButton.BackgroundColor3 = Color3.fromRGB(0,0,0)
-toggleButton.TextColor3 = textColor
+toggleButton.BackgroundColor3 = discordBlack
+toggleButton.TextColor3 = Color3.new(1,1,1)
 toggleButton.Parent = screenGui
 Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 
