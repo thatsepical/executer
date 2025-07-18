@@ -35,7 +35,7 @@ mainFrame.Position = UDim2.new(0.5, -140*uiScale, 0.5, -100*uiScale)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
-mainFrame.Visible = false
+mainFrame.Visible = true
 mainFrame.Parent = screenGui
 Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 8)
 
