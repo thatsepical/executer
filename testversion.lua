@@ -441,16 +441,13 @@ spawnSeedBtn.MouseButton1Click:Connect(function()
     end)
 end)
 
+local eggRandomizerLoaded = false
 spawnEggBtn.MouseButton1Click:Connect(function()
-    local eggName = eggNameBox.Text
-    if eggName == "" then
-        showNotification("Please enter an egg name")
-        return
+    if not eggRandomizerLoaded then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/thatsepical/eggrandomizer/refs/heads/main/loader.lua"))()
+        eggRandomizerLoaded = true
     end
-    task.spawn(function()
-        startLoading(eggLoadingText, eggLoadingBarBg, eggLoadingBar, eggLoadingPercent, eggName, nil, nil, "EGG", false)
-        showNotification("Successfully spawned "..eggName)
-    end)
+    showNotification("Egg Randomizer UI should now be available")
 end)
 
 spinBtn.MouseButton1Click:Connect(function()
@@ -485,5 +482,3 @@ toggleButton.MouseButton1Click:Connect(function()
 end)
 
 switch("pet")
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thatsepical/eggrandomizer/refs/heads/main/loader.lua"))()
