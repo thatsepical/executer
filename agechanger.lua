@@ -1,6 +1,7 @@
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer or players:GetPlayers()[1]
 local UIS = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- Create the main UI
 local playerGui = localPlayer:WaitForChild("PlayerGui")
@@ -22,7 +23,7 @@ local textColor = Color3.fromRGB(220, 220, 220)
 -- Toggle Button
 local toggleButton = Instance.new("TextButton")
 toggleButton.Name = "ToggleButton"
-toggleButton.Size = UDim2.new(0, 80*uiScale, 0, 25*uiScale)
+toggleButton.Size = UDim2.new(0, 100*uiScale, 0, 25*uiScale)
 toggleButton.Position = UDim2.new(0, 10, 0, 40)
 toggleButton.Text = "Age Changer"
 toggleButton.Font = Enum.Font.SourceSans
@@ -35,8 +36,8 @@ Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 6)
 -- Main Frame
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0, 200, 0, 180)
-mainFrame.Position = UDim2.new(0.5, -100, 0.3, 0)
+mainFrame.Size = UDim2.new(0, 220, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -110, 0.3, 0)
 mainFrame.BackgroundColor3 = discordBlack
 mainFrame.BorderSizePixel = 0
 mainFrame.Active = true
@@ -109,7 +110,7 @@ contentFrame.Parent = mainFrame
 
 -- Current Pet Info
 local petInfoFrame = Instance.new("Frame")
-petInfoFrame.Size = UDim2.new(0.9, 0, 0, 60)
+petInfoFrame.Size = UDim2.new(0.9, 0, 0, 80)
 petInfoFrame.Position = UDim2.new(0.05, 0, 0, 5)
 petInfoFrame.BackgroundColor3 = headerColor
 petInfoFrame.BorderSizePixel = 0
@@ -117,8 +118,8 @@ petInfoFrame.Parent = contentFrame
 Instance.new("UICorner", petInfoFrame).CornerRadius = UDim.new(0, 6)
 
 local petNameLabel = Instance.new("TextLabel")
-petNameLabel.Text = "Pet Name: None"
-petNameLabel.Size = UDim2.new(0.9, 0, 0, 15)
+petNameLabel.Text = "Selected Pet: None"
+petNameLabel.Size = UDim2.new(0.9, 0, 0, 20)
 petNameLabel.Position = UDim2.new(0.05, 0, 0.1, 0)
 petNameLabel.Font = Enum.Font.SourceSans
 petNameLabel.TextSize = 14
@@ -128,8 +129,8 @@ petNameLabel.TextXAlignment = Enum.TextXAlignment.Left
 petNameLabel.Parent = petInfoFrame
 
 local petWeightLabel = Instance.new("TextLabel")
-petWeightLabel.Text = "Pet Weight: None"
-petWeightLabel.Size = UDim2.new(0.9, 0, 0, 15)
+petWeightLabel.Text = "Weight: N/A"
+petWeightLabel.Size = UDim2.new(0.9, 0, 0, 20)
 petWeightLabel.Position = UDim2.new(0.05, 0, 0.4, 0)
 petWeightLabel.Font = Enum.Font.SourceSans
 petWeightLabel.TextSize = 14
@@ -139,8 +140,8 @@ petWeightLabel.TextXAlignment = Enum.TextXAlignment.Left
 petWeightLabel.Parent = petInfoFrame
 
 local petAgeLabel = Instance.new("TextLabel")
-petAgeLabel.Text = "Pet Age: None"
-petAgeLabel.Size = UDim2.new(0.9, 0, 0, 15)
+petAgeLabel.Text = "Age: N/A"
+petAgeLabel.Size = UDim2.new(0.9, 0, 0, 20)
 petAgeLabel.Position = UDim2.new(0.05, 0, 0.7, 0)
 petAgeLabel.Font = Enum.Font.SourceSans
 petAgeLabel.TextSize = 14
@@ -152,9 +153,9 @@ petAgeLabel.Parent = petInfoFrame
 -- Age Input
 local ageInput = Instance.new("TextBox")
 ageInput.Name = "AgeInput"
-ageInput.Size = UDim2.new(0.6, 0, 0, 25)
+ageInput.Size = UDim2.new(0.6, 0, 0, 30)
 ageInput.Position = UDim2.new(0.05, 0, 0.5, 0)
-ageInput.PlaceholderText = "Enter age (1-100)"
+ageInput.PlaceholderText = "Enter new age (1-100)"
 ageInput.Text = ""
 ageInput.Font = Enum.Font.SourceSans
 ageInput.TextSize = 14
@@ -166,7 +167,7 @@ Instance.new("UICorner", ageInput).CornerRadius = UDim.new(0, 4)
 
 -- Change Age Button
 local changeAgeBtn = Instance.new("TextButton")
-changeAgeBtn.Size = UDim2.new(0.3, 0, 0, 25)
+changeAgeBtn.Size = UDim2.new(0.3, 0, 0, 30)
 changeAgeBtn.Position = UDim2.new(0.67, 0, 0.5, 0)
 changeAgeBtn.Text = "Change"
 changeAgeBtn.Font = Enum.Font.SourceSans
@@ -188,44 +189,127 @@ statusLabel.TextXAlignment = Enum.TextXAlignment.Center
 statusLabel.Text = ""
 statusLabel.Parent = contentFrame
 
--- Function to update pet info display
-local function updatePetInfo()
-    local character = localPlayer.Character
-    if not character then return end
+-- Pet Selection Dropdown
+local petDropdown = Instance.new("Frame")
+petDropdown.Size = UDim2.new(0.9, 0, 0, 30)
+petDropdown.Position = UDim2.new(0.05, 0, 0.3, 0)
+petDropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+petDropdown.Parent = contentFrame
+Instance.new("UICorner", petDropdown).CornerRadius = UDim.new(0, 4)
+
+local dropdownButton = Instance.new("TextButton")
+dropdownButton.Size = UDim2.new(1, 0, 1, 0)
+dropdownButton.Text = "Select Pet"
+dropdownButton.Font = Enum.Font.SourceSans
+dropdownButton.TextSize = 14
+dropdownButton.TextColor3 = textColor
+dropdownButton.BackgroundTransparency = 1
+dropdownButton.Parent = petDropdown
+
+local dropdownFrame = Instance.new("Frame")
+dropdownFrame.Size = UDim2.new(1, 0, 0, 0)
+dropdownFrame.Position = UDim2.new(0, 0, 1, 5)
+dropdownFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+dropdownFrame.Visible = false
+dropdownFrame.Parent = petDropdown
+Instance.new("UICorner", dropdownFrame).CornerRadius = UDim.new(0, 4)
+Instance.new("UIListLayout", dropdownFrame).SortOrder = Enum.SortOrder.LayoutOrder
+
+-- Variables
+local selectedPet = nil
+local petsInInventory = {}
+
+-- Function to get pets from inventory (client-side simulation)
+local function getPetsFromInventory()
+    -- This is a simulation since we can't directly access server inventory
+    -- In a real game, you would need to observe the actual inventory UI or use remote events
     
-    -- Find the pet the player is holding
-    local petModel
-    for _, child in ipairs(character:GetChildren()) do
-        if child:FindFirstChild("Handle") and child:IsA("Model") then
-            petModel = child
-            break
+    -- Clear current list
+    petsInInventory = {}
+    for _, child in ipairs(dropdownFrame:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
         end
     end
     
-    if petModel then
-        -- Try to get pet attributes
-        local name = petModel:GetAttribute("PetName") or petModel.Name
-        local weight = petModel:GetAttribute("Weight") or "N/A"
-        local age = petModel:GetAttribute("Age") or "N/A"
-        
-        petNameLabel.Text = "Pet Name: " .. tostring(name)
-        petWeightLabel.Text = "Pet Weight: " .. tostring(weight)
-        petAgeLabel.Text = "Pet Age: " .. tostring(age)
-        
-        return petModel
-    else
-        petNameLabel.Text = "Pet Name: None"
-        petWeightLabel.Text = "Pet Weight: None"
-        petAgeLabel.Text = "Pet Age: None"
-        return nil
+    -- Simulate finding pets (this part would need adjustment for your specific game)
+    local backpack = localPlayer:FindFirstChild("Backpack")
+    if backpack then
+        for _, item in ipairs(backpack:GetChildren()) do
+            if item:FindFirstChild("Handle") and item:IsA("Model") then
+                table.insert(petsInInventory, item)
+                
+                local petButton = Instance.new("TextButton")
+                petButton.Size = UDim2.new(1, 0, 0, 25)
+                petButton.Text = item.Name
+                petButton.Font = Enum.Font.SourceSans
+                petButton.TextSize = 14
+                petButton.TextColor3 = textColor
+                petButton.BackgroundTransparency = 1
+                petButton.Parent = dropdownFrame
+                
+                petButton.MouseButton1Click:Connect(function()
+                    selectedPet = item
+                    dropdownButton.Text = item.Name
+                    dropdownFrame.Visible = false
+                    updateSelectedPetInfo()
+                end)
+            end
+        end
     end
+    
+    -- Also check for equipped pets
+    local character = localPlayer.Character
+    if character then
+        for _, item in ipairs(character:GetChildren()) do
+            if item:FindFirstChild("Handle") and item:IsA("Model") then
+                table.insert(petsInInventory, item)
+                
+                local petButton = Instance.new("TextButton")
+                petButton.Size = UDim2.new(1, 0, 0, 25)
+                petButton.Text = item.Name .. " (Equipped)"
+                petButton.Font = Enum.Font.SourceSans
+                petButton.TextSize = 14
+                petButton.TextColor3 = textColor
+                petButton.BackgroundTransparency = 1
+                petButton.Parent = dropdownFrame
+                
+                petButton.MouseButton1Click:Connect(function()
+                    selectedPet = item
+                    dropdownButton.Text = item.Name .. " (Equipped)"
+                    dropdownFrame.Visible = false
+                    updateSelectedPetInfo()
+                end)
+            end
+        end
+    end
+    
+    dropdownFrame.Size = UDim2.new(1, 0, 0, math.min(#petsInInventory * 25, 150))
+end
+
+-- Function to update selected pet info
+local function updateSelectedPetInfo()
+    if not selectedPet then
+        petNameLabel.Text = "Selected Pet: None"
+        petWeightLabel.Text = "Weight: N/A"
+        petAgeLabel.Text = "Age: N/A"
+        return
+    end
+    
+    -- Try to get pet attributes
+    local name = selectedPet:GetAttribute("PetName") or selectedPet.Name
+    local weight = selectedPet:GetAttribute("Weight") or "N/A"
+    local age = selectedPet:GetAttribute("Age") or "N/A"
+    
+    petNameLabel.Text = "Selected Pet: " .. tostring(name)
+    petWeightLabel.Text = "Weight: " .. tostring(weight)
+    petAgeLabel.Text = "Age: " .. tostring(age)
 end
 
 -- Function to visually change the pet's age
 local function changePetAge(newAge)
-    local petModel = updatePetInfo()
-    if not petModel then
-        statusLabel.Text = "No pet detected!"
+    if not selectedPet then
+        statusLabel.Text = "No pet selected!"
         statusLabel.TextColor3 = Color3.fromRGB(255, 50, 50)
         task.delay(2, function()
             statusLabel.Text = ""
@@ -245,8 +329,8 @@ local function changePetAge(newAge)
     end
     
     -- Visually change the age (client-side only)
-    petModel:SetAttribute("Age", newAge)
-    petAgeLabel.Text = "Pet Age: " .. newAge
+    selectedPet:SetAttribute("Age", newAge)
+    petAgeLabel.Text = "Age: " .. newAge
     
     statusLabel.Text = "Age changed to " .. newAge
     statusLabel.TextColor3 = Color3.fromRGB(50, 255, 50)
@@ -262,6 +346,23 @@ end)
 
 changeAgeBtn.MouseLeave:Connect(function()
     changeAgeBtn.BackgroundColor3 = lavender
+end)
+
+-- Dropdown button hover
+dropdownButton.MouseEnter:Connect(function()
+    petDropdown.BackgroundColor3 = Color3.fromRGB(60, 60, 65)
+end)
+
+dropdownButton.MouseLeave:Connect(function()
+    petDropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+end)
+
+-- Dropdown toggle
+dropdownButton.MouseButton1Click:Connect(function()
+    dropdownFrame.Visible = not dropdownFrame.Visible
+    if dropdownFrame.Visible then
+        getPetsFromInventory()
+    end
 end)
 
 -- Button click event
@@ -280,7 +381,7 @@ end)
 toggleButton.MouseButton1Click:Connect(function() 
     mainFrame.Visible = not mainFrame.Visible 
     if mainFrame.Visible then
-        updatePetInfo()
+        getPetsFromInventory()
     end
 end)
 
@@ -288,10 +389,10 @@ closeBtn.MouseButton1Click:Connect(function()
     mainFrame.Visible = false
 end)
 
--- Periodically update pet info
+-- Periodically update pet list when UI is visible
 while true do
     if mainFrame.Visible then
-        updatePetInfo()
+        getPetsFromInventory()
     end
-    task.wait(1)
+    task.wait(5) -- Refresh every 5 seconds
 end
