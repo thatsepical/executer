@@ -2,6 +2,11 @@ local players = game:GetService("Players")
 local collectionService = game:GetService("CollectionService")
 local localPlayer = players.LocalPlayer or players:GetPlayers()[1]
 local UIS = game:GetService("UserInputService")
+
+-- Wait for player if not immediately available
+if not localPlayer then
+    localPlayer = players.PlayerAdded:Wait()
+end
 local playerGui = localPlayer:WaitForChild("PlayerGui")
 
 -- Egg Randomizer Data and Functions
@@ -329,7 +334,7 @@ randomizerCloseBtn.MouseButton1Click:Connect(function()
     randomizerMainFrame.Visible = false
 end)
 
--- Spawner UI (from second file)
+-- Spawner UI
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "AdvancedSpawnerUI"
 screenGui.ResetOnSpawn = false
@@ -521,8 +526,4 @@ local function validateDecimal(box)
             t = p1.."."..p2
         end
         if t:sub(1,1) == "." then t = "0"..t end
-        if t ~= box.Text then box.Text = t end
-    end)
-end
-
-for _, b in ipairs({weightBox, ageBox, amount
+   
